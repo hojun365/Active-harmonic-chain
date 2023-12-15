@@ -28,7 +28,7 @@ class ODE(nn.Module):
 
     def forward(self,X): 
         """
-        The total legnth of the system is L = 1.
+        The total legnth of the system set as L = 1.
         """
         rn = X[...,:self.N]
         # r_{n+1},                                       # r_{n-1}
@@ -50,5 +50,8 @@ class SDE(nn.Module):
     def forward(self,X):
         # X.shape = (n_traj, 2N)
         return 0
-def Run():
+
+def Run(시간, 초기조건, 파라미터 조건, cpu or GPU?):
+    ode = ODE(); sde = SDE
+
     return 0
