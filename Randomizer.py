@@ -19,25 +19,18 @@ class ODE(nn.Module):
         self.τ = tau    # self propulsion decay rate
         self.K = spring # spring constant
 
-    def True_position(self,X):
-        """
-        Periodic boundary condition 고려 후의 위치 (거리 계산에 필요함)
-        """
-        with torch.no_grad():
-            rn_PBC = X[...,:self.N]%system_size
-        return rn_PBC
+    # def Domain(self,X):
+    #     """
+    #     (0, system_size): 0th domain, (-system_size,0): -1st domain, ..., (system_size, 2*system_suze): 1st domain
+    #     """
+    #     with torch.no_grad():
+    #         rn = X[...,:self.N]
+    #         domain_id = (rn/system_size).to(torch.int64) # 입자가 어떤 domain에 들어가 있는가?
+    #     return domain_id
 
-    def Domain(self,X):
-        """
-        (0, system_size): 0th domain, (-system_size,0): -1st domain, ..., (system_size, 2*system_suze): 1st domain
-        """
-        with torch.no_grad():
-            rn = X[...,:self.N]
-            domain_id = (rn/system_size).to(torch.int64) # 입자가 어떤 domain에 들어가 있는가?
-        return domain_id
-
-    def True_Distance(self,X):
-        
+    def Distance(self,X):
+        rn = X[...,:self.N]
+        drp = torch.roll(rn,shifts=(0,-1),dims=(0,1))
 
             
 
